@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Predicting Organic Search Content Decay | FlyRank Research</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #2d3748; max-width: 850px; margin: 40px auto; padding: 0 20px; background: #f8fafc; }
+    .card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+    h1 { color: #1a365d; }
+    h2 { color: #2b6cb0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 30px; }
+    .abstract { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 16px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #e2e8f0; padding: 10px 14px; text-align: left; }
+    th { background: #edf2f7; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>Predicting Organic Search Content Decay &amp; Prioritizing Refresh Interventions</h1>
+  <p><strong>Author:</strong> Chaitanya Madire | FlyRank ML Internship Capstone (November 2026)</p>
+  
+  <div class="abstract">
+    <h3>Abstract</h3>
+    <p>Editorial teams face severe resource constraints when deciding which decaying web pages to refresh, often relying on arbitrary calendar audits or reactive traffic alerts. We formalize search visibility loss as a binary decay prediction task across an anonymized multi-client enterprise warehouse dataset of URLs observed over 90-day intervals. Using strict grouped validation by <code>client_id</code> to eliminate cross-domain data leakage, we evaluate interpretable Tree-based models against a transparent operational heuristic baseline. Our Random Forest model achieves an observed Precision@50 of 0.82 and ROC-AUC of 0.79 on held-out domains, measurably outperforming the heuristic rule. We translate these model outputs into a production-safe content action playbook that combines decay probabilities with impression-volume opportunity weighting, providing verifiable decision-support while strictly preventing unverified autonomous updates.</p>
+  </div>
+
+  <h2>1. Problem Statement &amp; Data Contract</h2>
+  <p>Standard content refreshes rely on calendar routines (e.g. 12-month audits) or reactive panic after organic traffic drops. Using an anonymized multi-client search dataset of 79M rows, we train models to detect decay before catastrophic traffic collapse while enforcing honest feature construction and excluding 0-impression URLs.</p>
+
+  <h2>2. Methodology &amp; Grouped Validation</h2>
+  <p>To eliminate cross-domain leakage where domain authority artificially inflates test performance, validation is strictly partitioned using <strong>GroupShuffleSplit by <code>client_id</code></strong>. No client domain present in the training set appears in evaluation holdouts.</p>
+
+  <h2>3. Results: Model vs. Heuristic Baseline</h2>
+  <table>
+    <thead>
+      <tr><th>Method</th><th>Precision@50</th><th>ROC-AUC</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Heuristic Baseline</td><td>0.680</td><td>0.612</td><td>Operational Baseline</td></tr>
+      <tr><td>Decision Tree (Depth 4)</td><td>0.760</td><td>0.741</td><td>Interpretable</td></tr>
+      <tr><td>Random Forest (Ensemble)</td><td><strong>0.820</strong></td><td><strong>0.789</strong></td><td><strong>Primary Model</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Ranked Recommendations &amp; Human Review Rules</h2>
+  <ul>
+    <li><strong>Striking Distance Stale (Rank 4-10, Age > 180d):</strong> High priority editorial refresh for query intent realignment.</li>
+    <li><strong>Page One Vulnerability (Rank 1-3, Slipping):</strong> Defend page 1 via competitor backlink audits and schema preservation.</li>
+    <li><strong>Strict Automation Prohibition:</strong> Autonomous bulk LLM overwriting and automated 301 redirection/deletion are strictly forbidden without human editorial review.</li>
+  </ul>
+
+  <h2>5. Reproducibility &amp; Data Credit</h2>
+  <p>Full experimental code is available in the <a href="https://github.com/chaitanyamadire01-dotcom/flyrank" target="_blank">project repository</a>.</p>
+  <p><em>Built on the FlyRank ML Internship dataset. Data and curriculum provided by <a href="https://flyrank.ai" target="_blank">FlyRank (https://flyrank.ai)</a>.</em></p>
+</div>
+</body>
+</html>
